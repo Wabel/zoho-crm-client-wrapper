@@ -20,7 +20,7 @@ class ZCRMModuleHelper
      * @param  \DateTime|null             $fromModifiedDate
      * @return ZCRMRecord[]
      */
-    public static function getAllZCRMRecordsFromPagination(ZohoClient $zohoClient, string $module, $cvId = null, $sortColumnString = null, $sortOrderString = null, $page = 1, $limitRows = 200, \DateTime $fromModifiedDate = null, LoggerInterface $logger = null)
+    public static function getAllZCRMRecordsFromPagination(ZohoClient $zohoClient, string $module, $cvId = null, $sortColumnString = null, $sortOrderString = null, $page = 1, $limitRows = 200, \DateTime $fromModifiedDate = null, LoggerInterface $logger = null, bool &$stopLoopAndHasMoreResults = null)
     {
 
         /**
@@ -60,6 +60,10 @@ class ZCRMModuleHelper
             if ($infoResponse && $infoResponse->getRecordCount()) {
                 $records = array_merge($records, $recordsRequest->getData());
             }
+            if ($stopLoopAndHasMoreResults) {
+                $stopLoopAndHasMoreResults = $infoResponse && $infoResponse->getMoreRecords();
+                break;
+            }
             $page++;
         } while ($infoResponse && $infoResponse->getMoreRecords());
         return $records;
@@ -76,7 +80,7 @@ class ZCRMModuleHelper
      * @return \ZCRMTrashRecord[]
      * @throws ZCRMException
      */
-    public static function getAllZCRMTrashRecordsFromPagination(ZohoClient $zohoClient, $module, $typeRecord = 'all', \DateTimeInterface $lastModifiedTime = null, $page = 1, $perPage = 200, LoggerInterface $logger = null)
+    public static function getAllZCRMTrashRecordsFromPagination(ZohoClient $zohoClient, $module, $typeRecord = 'all', \DateTimeInterface $lastModifiedTime = null, $page = 1, $perPage = 200, LoggerInterface $logger = null, bool &$stopLoopAndHasMoreResults = null)
     {
 
         /**
@@ -100,6 +104,10 @@ class ZCRMModuleHelper
             $infoResponse = $recordsRequest ? $recordsRequest->getInfo() : null;
             if ($infoResponse && $infoResponse->getRecordCount()) {
                 $records = array_merge($records, $recordsRequest->getData());
+            }
+            if ($stopLoopAndHasMoreResults) {
+                $stopLoopAndHasMoreResults = $infoResponse && $infoResponse->getMoreRecords();
+                break;
             }
             $page++;
         } while ($infoResponse && $infoResponse->getMoreRecords());
