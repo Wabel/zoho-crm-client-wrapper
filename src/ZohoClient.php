@@ -600,7 +600,7 @@ class ZohoClient
             /**
              * @var $bulkAPIResponse BulkAPIResponse
              */
-            $bulkAPIResponse = $zcrmModuleIns->upsertRecords($records);
+            $bulkAPIResponse = $zcrmModuleIns->upsertRecords($records, []);
             return $bulkAPIResponse->getEntityResponses();
         } catch(ZCRMException $exception){
             $recordsJson = [];
@@ -624,11 +624,11 @@ class ZohoClient
      *
      * @param  $module
      * @param  ZCRMRecord[] $records
-     * @param bool|null $trigger
+     * @param string[] $trigger
      * @return EntityResponse[]
      * @throws ZCRMException
      */
-    public function insertRecords($module, array $records,  ?bool $trigger = null)
+    public function insertRecords($module, array $records,  array $trigger = [])
     {
         try{
             $zcrmModuleIns = $this->getModule($module);
@@ -658,11 +658,11 @@ class ZohoClient
      *
      * @param string $module
      * @param  ZCRMRecord[] $records
-     * @param bool|null $trigger
+     * @param string[] $trigger
      * @return EntityResponse[]
      * @throws \Exception
      */
-    public function updateRecords(string $module, array $records,  ?bool $trigger = null)
+    public function updateRecords(string $module, array $records,  array $trigger = [])
     {
         $zcrmModuleIns = $this->getModule($module);
 
