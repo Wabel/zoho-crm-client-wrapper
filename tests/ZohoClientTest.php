@@ -26,7 +26,6 @@ class ZohoClientTest extends TestCase
                 'applicationLogFilePath' => getenv('applicationLogFilePath'),
                 'persistence_handler_class' => getenv('persistence_handler_class'),
                 'token_persistence_path' => getenv('token_persistence_path'),
-                'sandbox' => 'true'
             ],
             getenv('timeZone')
         );
