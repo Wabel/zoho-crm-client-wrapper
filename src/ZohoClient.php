@@ -148,9 +148,6 @@ class ZohoClient
             $this->logClientException(__METHOD__, $ex,'error', 'Cannot generate access token {grantToken}', ['grantToken' => $grantToken]);
             throw $ex;
         }
-        catch (ZohoOAuthException $exceptionAuth){
-            $this->logAuthException(__METHOD__, $exceptionAuth);
-        }
     }
 
     /**
