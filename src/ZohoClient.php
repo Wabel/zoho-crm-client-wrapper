@@ -301,25 +301,45 @@ class ZohoClient
     /**
      * Implements getRecords API method.
      *
-     * @param  string $module
-     * @param  string|null $cvId
-     * @param  string|null $sortColumnString
-     * @param  string|null $sortOrderString
-     * @param  int $fromIndex
-     * @param  int $toIndex
-     * @param  null $header
-     * @return ZCRMRecord[]
+     * @param string $module
+     * @param array $header
+     * @param string|null $fields
+     * @param string|null $converted Value can be: 'true', 'false', 'both'.
+     * @param string|null $approved Value can be: 'true', 'false', 'both'.
+     * @param string|null $sortColumnString
+     * @param string|null $sortOrderString Value can be: 'desc', 'asc'.
+     * @param int|null $page API default value: 1.
+     * @param int|null $recordPerPage API default value: 200.
+     * @param int|null $cvId
+     * @param int|null $territoryID
+     * @param bool|null $withChild
+     * @return ZCRMRecord[]|null
      * @throws ZCRMException
      */
-    public function getRecords($module, $cvId = null, $sortColumnString = null, $sortOrderString = null, $fromIndex = 1, $toIndex = 200, $header = null)
+    public function getRecords(string $module, array $header = [], string $fields = null, string $converted = null,
+                               string $approved = null,
+                               ?string $sortColumnString = null, ?string $sortOrderString = null,
+                               ?int $page = null, ?int $recordPerPage = null, ?int $cvId = null, ?int $territoryID = null, ?bool $withChild = null): ?array
     {
 
         $zcrmModuleIns = $this->getModule($module);
+        $params = [];
+        // @todo: use mapper instead.
+        if($fields) $params['fields'] = $fields;
+        if($converted) $params['converted'] = $converted;
+        if($approved) $params['approved'] = $approved;
+        if($sortColumnString) $params['sort_by'] = $sortColumnString;
+        if($sortOrderString) $params['sort_order'] = $sortOrderString;
+        if($page) $params['page'] = $page;
+        if($page) $params['per_page'] = $recordPerPage;
+        if($cvId) $params['cvid'] = $cvId;
+        if($territoryID) $params['territory_id'] = $territoryID;
+        if($withChild) $params['include_child'] = $withChild;
         try{
             /**
              * @var $bulkAPIResponse BulkAPIResponse
              */
-            $bulkAPIResponse = $zcrmModuleIns->getRecords($cvId, $sortColumnString, $sortOrderString, $fromIndex, $toIndex, $header);
+            $bulkAPIResponse = $zcrmModuleIns->getRecords($params, $header);
             return $bulkAPIResponse->getData();
         } catch (ZCRMException $ex){
             $this->logClientException(__METHOD__, $ex,'error', 'Cannot get records for the module {moduleName}', [

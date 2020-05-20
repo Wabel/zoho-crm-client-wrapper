@@ -112,8 +112,7 @@ class ZohoClientTest extends TestCase
     public function testGetRecords(array $leads)
     {
         $records = $this->zohoClient->getRecords(
-            'Leads', null, 'Created_Time', 'desc', 1, 4,
-            ['If-Modified-Since' => (new \DateTime())->sub(new \DateInterval('PT2M'))->format(\DateTime::ATOM)]
+            'Leads', ['If-Modified-Since' => (new \DateTime())->sub(new \DateInterval('PT2M'))->format(\DateTime::ATOM)], null, null,null,'Created_Time', 'desc', 1, 4
         );
         $firstEntity = array_shift($records);
         $this->assertContainsOnlyInstancesOf('zcrmsdk\crm\crud\ZCRMRecord', $records);
