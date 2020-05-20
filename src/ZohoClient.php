@@ -471,25 +471,32 @@ class ZohoClient
 
     /**
      * Implements get Related List Records API method.
+     * @see https://www.zoho.com/crm/developer/docs/api/get-related-records.html
      *
-     * @param  $module
-     * @param  $id
-     * @param  string $relatedListAPIName
-     * @param  string|null $sortByField
-     * @param  string|null $sortByOrder
-     * @param  int $page
-     * @param  int $perPage
-     * @return BulkAPIResponse
+     * @param string $module
+     * @param string $id
+     * @param string $relatedListAPIName
+     * @param array $header
+     * @param int|null $page API default value: 1.
+     * @param int|null $perPage API default value: 200.
+     * @param array $additionalParams
+     * @return BulkAPIResponse|null
      * @throws ZCRMException
+     *
      */
-    public function getRelatedRecords($module, $id, $relatedListAPIName, $sortByField = null, $sortByOrder = null, $page = 1, $perPage = 200)
+    public function getRelatedRecords(string $module, string $id, string $relatedListAPIName, array $header = [], ?int $page = null, ?int $perPage = null,
+                                      array $additionalParams = [])
     {
         /**
          * @var $zcrmRecordIns ZCRMRecord
          */
         $zcrmRecordIns  = $this->getRecordById($module, $id);
+        $params = [];
+        if($page) $params['page'] = $page;
+        if($page) $params['per_page'] = $perPage;
+        $params = array_merge($params, $additionalParams);
         try{
-            $bulkAPIResponse = $zcrmRecordIns->getRelatedListRecords($relatedListAPIName, $sortByField, $sortByOrder, $page, $perPage);
+            $bulkAPIResponse = $zcrmRecordIns->getRelatedListRecords($relatedListAPIName, $params, $header);
         } catch(ZCRMException $exception){
             if(ExceptionZohoClient::exceptionCodeFormat($exception->getExceptionCode()) === ExceptionZohoClient::EXCEPTION_CODE_NO__CONTENT) {
                 return null;
@@ -708,6 +715,7 @@ class ZohoClient
 
     /**
      * Implements updateRelatedRecords API method.
+     * @see https://www.zoho.com/crm/developer/docs/api/update-related-records.html
      *
      * @param string $module
      * @param string $recordId
