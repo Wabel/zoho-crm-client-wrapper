@@ -29,10 +29,10 @@ $zohoClient = new ZohoClient([
     'apiBaseUrl' => '',
     'apiVersion' => '',
     'access_type' => '',
-    'accounts_url' => '',
+    'accounts_url' => '', // Need this one during token generation.
     'persistence_handler_class' => '',
     'token_persistence_path' => ''
-], 'Europe/Paris);
+], 'Europe/Paris');
 ```  
 
 Zoho CRM Commands
