@@ -7,6 +7,7 @@ jobs:
       filepath_upload: ~/code/.circleci/sample/zoho-logo-zh-2x.png
       applicationLogFilePath: ~/code/client/logs
       token_persistence_path: ~/code/client/token
+      persistence_handler_class: ZohoOAuthPersistenceByFile
     working_directory: ~/code
     steps:
       - checkout
