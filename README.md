@@ -1,4 +1,4 @@
-Wabel's Zoho-CRM Client Wrapper [![Build Status](https://travis-ci.com/Wabel/zoho-crm-client-wrapper.svg?branch=1.2)](https://travis-ci.com/Wabel/zoho-crm-client-wrapper)
+Wabel's Zoho-CRM Client Wrapper [![CircleCI](https://circleci.com/github/rbergDrox/zoho-crm-client-wrappe.svg?style=svg)](<LINK>)
 ====================
 
 It's a migration and extraction from [zoho-crm-orm](https://github.com/Wabel/zoho-crm-orm/tree/1.2) for using the API v2 
