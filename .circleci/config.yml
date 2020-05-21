@@ -10,20 +10,22 @@ jobs:
     working_directory: ~/code
     steps:
       - checkout
+      # Init Zoho environment for API
       - run: mkdir -p client/logs
       - run: touch client/logs/ZCRMClientLibrary.log
       - run: mkdir -p client/token
       - run: touch client/token/zcrm_oauthtokens.tx
       - run: sudo composer self-update
+      # Download and cache dependencies
       - restore_cache:
           keys:
-            - composer-v1-{{ checksum "composer.lock" }}
-            - composer-v1-
+            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-dependencies-
       - run: composer install -n --prefer-dist
       - save_cache:
-          key: composer-v1-{{ checksum "composer.lock" }}
+          key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
-            - vendor
+            - ./vendor
       - run: vendor/bin/phpunit
 
 workflows:
