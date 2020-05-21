@@ -1,0 +1,33 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.1-cli
+    enviroment:
+      filepath_upload: ~/code/.circleci/sample/zoho-logo-zh-2x.png
+      applicationLogFilePath: ~/code/client/logs
+      token_persistence_path: ~/code/client/token
+    working_directory: ~/code
+    steps:
+      - checkout
+      - run: mkdir -p client/logs
+      - run: touch client/logs/ZCRMClientLibrary.log
+      - run: mkdir -p client/token
+      - run: touch client/token/zcrm_oauthtokens.tx
+      - run: sudo composer self-update
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run: vendor/bin/phpunit
+
+workflows:
+  Setup:
+    jobs:
+      - build
+  version: 2
