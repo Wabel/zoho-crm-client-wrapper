@@ -15,7 +15,7 @@ jobs:
       - run: mkdir -p client/logs
       - run: touch client/logs/ZCRMClientLibrary.log
       - run: mkdir -p client/token
-      - run: touch client/token/zcrm_oauthtokens.tx
+      - run: touch client/token/zcrm_oauthtokens.txt
       - run: sudo composer self-update
       # Download and cache dependencies
       - restore_cache:
