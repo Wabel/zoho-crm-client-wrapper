@@ -23,7 +23,7 @@ jobs:
             - ./vendor
       - run:
           name: Run Unit Tests
-          command: sudo vendor/bin/phpunit
+          command: vendor/bin/phpunit
           environment:
             FILEPATH_TEST_UPLOAD: ~/project/.circleci/sample/zoho-logo-zh-2x.png
             APPLICATION_LOG_FILE_PATH: ~/project/client/logs
