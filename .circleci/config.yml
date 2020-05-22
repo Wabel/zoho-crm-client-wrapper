@@ -8,7 +8,6 @@ jobs:
       # Init Zoho environment for API
       - run: mkdir -p client/logs
       - run: touch client/logs/ZCRMClientLibrary.log
-      - run: chmod 757 client/logs/ZCRMClientLibrary.log
       - run: mkdir -p client/token
       - run: touch client/token/zcrm_oauthtokens.txt
       - run: sudo composer self-update
@@ -26,9 +25,9 @@ jobs:
           name: Run Unit Tests
           command: vendor/bin/phpunit
           environment:
-            FILEPATH_TEST_UPLOAD: ~/project/.circleci/sample/zoho-logo-zh-2x.png
-            APPLICATION_LOG_FILE_PATH: ~/project/client/logs
-            TOKEN_PERSISTENCE_PATH: ~/project/client/token
+            FILEPATH_TEST_UPLOAD: /home/circleci/project/.circleci/sample/zoho-logo-zh-2x.png
+            APPLICATION_LOG_FILE_PATH: /home/circleci/project/client/logs
+            TOKEN_PERSISTENCE_PATH: /home/circleci/project/client/token
             PERSISTENCE_HANDLER_CLASS: ZohoOAuthPersistenceByFile
 
 workflows:
