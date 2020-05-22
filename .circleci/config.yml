@@ -10,13 +10,6 @@ jobs:
       - run: touch client/logs/ZCRMClientLibrary.log
       - run: mkdir -p client/token
       - run: touch client/token/zcrm_oauthtokens.txt
-      - run:
-          name: Run Zoho Token
-          command: php /home/circleci/project/.circleci/scripts/refreshToken.php
-          environment:
-            APPLICATION_LOG_FILE_PATH: /home/circleci/project/client/logs
-            TOKEN_PERSISTENCE_PATH: /home/circleci/project/client/token
-            PERSISTENCE_HANDLER_CLASS: ZohoOAuthPersistenceByFile
       - run: sudo composer self-update
       # Download and cache dependencies
       - restore_cache:
@@ -28,6 +21,13 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
+      - run:
+          name: Run Zoho Token
+          command: php /home/circleci/project/.circleci/scripts/refreshToken.php
+          environment:
+            APPLICATION_LOG_FILE_PATH: /home/circleci/project/client/logs
+            TOKEN_PERSISTENCE_PATH: /home/circleci/project/client/token
+            PERSISTENCE_HANDLER_CLASS: ZohoOAuthPersistenceByFile
       - run:
           name: Run Unit Tests
           command: vendor/bin/phpunit
