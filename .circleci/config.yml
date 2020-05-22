@@ -27,6 +27,7 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
+      - run: chown -R $USER:$USER code/client
       - run: vendor/bin/phpunit
 
 workflows:
