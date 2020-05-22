@@ -10,7 +10,6 @@ jobs:
       - run: touch client/logs/ZCRMClientLibrary.log
       - run: mkdir -p client/token
       - run: touch client/token/zcrm_oauthtokens.txt
-      - run: chown -R $USER:$USER client/logs
       - run: sudo composer self-update
       # Download and cache dependencies
       - restore_cache:
@@ -24,7 +23,7 @@ jobs:
             - ./vendor
       - run:
           name: Run Unit Tests
-          command: vendor/bin/phpunit
+          command: sudo vendor/bin/phpunit
           environment:
             FILEPATH_TEST_UPLOAD: ~/project/.circleci/sample/zoho-logo-zh-2x.png
             APPLICATION_LOG_FILE_PATH: ~/project/client/logs
