@@ -3,11 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/php:7.1-cli
-    enviroment:
-      FILEPATH_TEST_UPLOAD: ~/project/.circleci/sample/zoho-logo-zh-2x.png
-      APPLICATION_LOG_FILE_PATH: ~/project/code/client/logs
-      TOKEN_PERSISTENCE_PATH: ~/project/code/client/token
-      PERSISTENCE_HANDLER_CLASS: ZohoOAuthPersistenceByFile
     steps:
       - checkout
       # Init Zoho environment for API
@@ -26,7 +21,14 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
-      - run: sudo vendor/bin/phpunit
+      - run:
+          name: Run Unit Tests
+          command: vendor/bin/phpunit
+          environment:
+            FILEPATH_TEST_UPLOAD: ~/project/.circleci/sample/zoho-logo-zh-2x.png
+            APPLICATION_LOG_FILE_PATH: ~/project/code/client/logs
+            TOKEN_PERSISTENCE_PATH: ~/project/code/client/token
+            PERSISTENCE_HANDLER_CLASS: ZohoOAuthPersistenceByFile
 
 workflows:
   Setup:
