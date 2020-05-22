@@ -4,10 +4,10 @@ jobs:
     docker:
       - image: circleci/php:7.1-cli
     enviroment:
-      filepath_upload: ~/project/.circleci/sample/zoho-logo-zh-2x.png
-      applicationLogFilePath: ~/project/code/client/logs
-      token_persistence_path: ~/project/code/client/token
-      persistence_handler_class: ZohoOAuthPersistenceByFile
+      FILEPATH_TEST_UPLOAD: ~/project/.circleci/sample/zoho-logo-zh-2x.png
+      APPLICATION_LOG_FILE_PATH: ~/project/code/client/logs
+      TOKEN_PERSISTENCE_PATH: ~/project/code/client/token
+      PERSISTENCE_HANDLER_CLASS: ZohoOAuthPersistenceByFile
     steps:
       - checkout
       # Init Zoho environment for API

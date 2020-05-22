@@ -25,7 +25,6 @@ $zohoClient = new ZohoClient([
     'redirect_uri' => 'http://xxxxxxxxx.com/bakcxxxx',
     'currentUserEmail' => 'xxxxx@test.fr',
     'applicationLogFilePath' => '/xxx/xxx/',
-    'sandbox' => 'true' or 'false',
     'apiBaseUrl' => '',
     'apiVersion' => '',
     'access_type' => '',
@@ -39,7 +38,7 @@ Zoho CRM Commands
 -------------------------------------
 The project also comes with a Symfony Command.
 
-The command's constructor takes in parameter the `ZohoClient`
+The command's constructor takes `ZohoClient` as a parameter.
 
 Usage:
 
@@ -54,14 +53,15 @@ Setting up unit tests
 Interested in contributing? You can easily set up the unit tests environment:
 Read how to change the client configuration - read [Configuration](https://github.com/zoho/zcrm-php-sdk)
 - copy the `phpunit.xml.dist` file into `phpunit.xml`
-- change the stored environment variable `client_secret`
-- change the stored environment variable `redirect_uri`
-- change the stored environment variable `currentUserEmail`
-- change the stored environment variable `applicationLogFilePath`
-- change the stored environment variable `persistence_handler_class`
-- change the stored environment variable `token_persistence_path`
-- change the stored environment variable `userid_test`
-- change the stored environment variable `timeZone`
-- change the stored environment variable `deal_status`
-- change the stored environment variable `campaign_type`
-- change the stored environment variable `filepath_upload`
+- change the stored environment variable `CLIENT_ID`
+- change the stored environment variable `CLIENT_SECRET`
+- change the stored environment variable `REDIRECT_URI`
+- change the stored environment variable `CURRENT_USER_EMAIL`
+- change the stored environment variable `APPLICATION_LOG_FILE_PATH`
+- change the stored environment variable `PERSISTENCE_HANDLER_CLASS`
+- change the stored environment variable `TOKEN_PERSISTENCE_PATH`
+- change the stored environment variable `USERID_TEST`
+- change the stored environment variable `ZOHO_TIMEZONE`
+- change the stored environment variable `DEAL_STATUS`
+- change the stored environment variable `CAMPAIGN_TYPE`
+- change the stored environment variable `FILEPATH_TEST_UPLOAD`

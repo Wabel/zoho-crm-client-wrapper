@@ -19,15 +19,15 @@ class ZohoClientTest extends TestCase
     {
         $this->zohoClient  = new ZohoClient(
             [
-                'client_id' => getenv('client_id'),
-                'client_secret' => getenv('client_secret'),
-                'redirect_uri' => getenv('redirect_uri'),
-                'currentUserEmail' => getenv('currentUserEmail'),
-                'applicationLogFilePath' => getenv('applicationLogFilePath'),
-                'persistence_handler_class' => getenv('persistence_handler_class'),
-                'token_persistence_path' => getenv('token_persistence_path'),
+                'client_id' => getenv('CLIENT_ID'),
+                'client_secret' => getenv('CLIENT_SECRET'),
+                'redirect_uri' => getenv('REDIRECT_URI'),
+                'currentUserEmail' => getenv('CURRENT_USER_EMAIL'),
+                'applicationLogFilePath' => getenv('APPLICATION_LOG_FILE_PATH'),
+                'persistence_handler_class' => getenv('PERSISTENCE_HANDLER_CLASS'),
+                'token_persistence_path' => getenv('TOKEN_PERSISTENCE_PATH'),
             ],
-            getenv('timeZone')
+            getenv('ZOHO_TIMEZONE')
         );
     }
 
@@ -60,9 +60,9 @@ class ZohoClientTest extends TestCase
 
     public function testGetUser()
     {
-        $user = $this->zohoClient->getUser(getenv('userid_test'));
+        $user = $this->zohoClient->getUser(getenv('USERID_TEST'));
         $this->assertInstanceOf('zcrmsdk\crm\setup\users\ZCRMUser', $user);
-        $this->assertEquals(getenv('userid_test'), $user->getId());
+        $this->assertEquals(getenv('USERID_TEST'), $user->getId());
     }
 
 
@@ -222,7 +222,7 @@ class ZohoClientTest extends TestCase
         $lead->setFieldValue('Company', 'Company To Convert');
         $this->zohoClient->insertRecords('Leads', [$lead]);
         $this->assertNotNull($lead->getEntityId());
-        $conversionResult = $this->zohoClient->convertLead($lead->getEntityId(), null, getenv('userid_test'));
+        $conversionResult = $this->zohoClient->convertLead($lead->getEntityId(), null, getenv('USERID_TEST'));
         $this->assertArrayHasKey(APIConstants::ACCOUNTS, $conversionResult);
         $this->assertArrayHasKey(APIConstants::CONTACTS, $conversionResult);
     }
@@ -241,19 +241,19 @@ class ZohoClientTest extends TestCase
         $this->assertNotNull($account->getEntityId());
         $campaign = ZCRMRecord::getInstance('Campaigns', null);
         $campaign->setFieldValue('Campaign_Name', 'Campaign Test Lead Convert');
-        $campaign->setFieldValue('Type', getenv('campaign_type'));
+        $campaign->setFieldValue('Type', getenv('CAMPAIGN_TYPE'));
         $this->zohoClient->insertRecords('Campaigns', [$campaign]);
         $this->assertNotNull($campaign->getEntityId());
         $deal = ZCRMRecord::getInstance('Deals', null);
         $deal->setFieldValue('Deal_Name', 'Deal Lead To Convert 2');
         $deal->setFieldValue('Closing_Date', (new \DateTime())->sub(new \DateInterval('P1D'))->format('Y-m-d'));
-        $deal->setFieldValue('Stage', getenv('deal_status'));
+        $deal->setFieldValue('Stage', getenv('DEAL_STATUS'));
         $deal->setFieldValue('Account_Name', $account);
         $deal->setFieldValue('Amount', rand(10000, 20000));
         $deal->setFieldValue('Campaign_Source', $campaign);
         $this->zohoClient->insertRecords('Deals', [$deal]);
         $this->assertNotNull($deal->getEntityId());
-        $conversionResult2 = $this->zohoClient->convertLead($lead2->getEntityId(), $deal->getEntityId(), getenv('userid_test'));
+        $conversionResult2 = $this->zohoClient->convertLead($lead2->getEntityId(), $deal->getEntityId(), getenv('USERID_TEST'));
         $this->assertArrayHasKey(APIConstants::ACCOUNTS, $conversionResult2);
         $this->assertArrayHasKey(APIConstants::CONTACTS, $conversionResult2);
         $this->assertArrayHasKey(APIConstants::DEALS, $conversionResult2);
@@ -292,7 +292,7 @@ class ZohoClientTest extends TestCase
         $account->setFieldValue('Account_Name', 'Account To Upload File');
         $this->zohoClient->insertRecords('Accounts', [$account]);
         $this->assertNotNull($account->getEntityId());
-        $response = $this->zohoClient->uploadFile('Accounts', $account->getEntityId(), getenv('filepath_upload'));
+        $response = $this->zohoClient->uploadFile('Accounts', $account->getEntityId(), getenv('FILEPATH_TEST_UPLOAD'));
         $this->assertNotNull($response->getDetails());
         $this->assertArrayHasKey('id', $response->getDetails());
         $this->assertInstanceOf('zcrmsdk\crm\crud\ZCRMAttachment', $response->getData());
@@ -306,7 +306,7 @@ class ZohoClientTest extends TestCase
     public function testDownloadFile(ZCRMAttachment $fileUploaded)
     {
         $fileApiResponse = $this->zohoClient->downloadFile('Accounts', $fileUploaded->getParentRecord()->getEntityId(), $fileUploaded->getId());
-        $filename= pathinfo(getenv('filepath_upload'), PATHINFO_BASENAME);
+        $filename= pathinfo(getenv('FILEPATH_TEST_UPLOAD'), PATHINFO_BASENAME);
         $this->assertEquals($filename, $fileApiResponse->getFileName());
         $this->assertNotNull($fileApiResponse->getFileContent());
     }
