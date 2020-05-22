@@ -4,18 +4,18 @@ jobs:
     docker:
       - image: circleci/php:7.1-cli
     enviroment:
-      filepath_upload: ~/code/.circleci/sample/zoho-logo-zh-2x.png
-      applicationLogFilePath: ~/code/client/logs
-      token_persistence_path: ~/code/client/token
+      filepath_upload: ~/project/.circleci/sample/zoho-logo-zh-2x.png
+      applicationLogFilePath: ~/project/code/client/logs
+      token_persistence_path: ~/project/code/client/token
       persistence_handler_class: ZohoOAuthPersistenceByFile
-    working_directory: ~/code
     steps:
       - checkout
       # Init Zoho environment for API
-      - run: mkdir -p ~/code/client/logs
-      - run: touch ~/code/client/logs/ZCRMClientLibrary.log
-      - run: mkdir -p ~/code/client/token
+      - run: mkdir -p client/logs
+      - run: touch client/logs/ZCRMClientLibrary.log
+      - run: mkdir -p client/token
       - run: touch client/token/zcrm_oauthtokens.txt
+      - run: cat client/token/zcrm_oauthtokens.txt
       - run: sudo composer self-update
       # Download and cache dependencies
       - restore_cache:
@@ -27,7 +27,6 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
-      - run: chmod -R 755 ~/code/client
       - run: vendor/bin/phpunit
 
 workflows:
