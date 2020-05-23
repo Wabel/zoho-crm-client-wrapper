@@ -1,4 +1,4 @@
-Wabel's Zoho-CRM Client Wrapper
+Wabel's Zoho-CRM Client Wrapper [![Wabel](https://circleci.com/gh/Wabel/zoho-crm-client-wrapper.svg?style=svg)](https://circleci.com/gh/Wabel/zoho-crm-client-wrapper/tree/master)
 ====================
 
 It's a migration and extraction from [zoho-crm-orm](https://github.com/Wabel/zoho-crm-orm/tree/1.2) for using the API v2 
@@ -10,7 +10,6 @@ This project is a PHP wrapper for  ZOHO CRM Client ([zcrm-php-sdk](https://githu
 
 Initialize the client?
 -------------------------------------
-```
 
 Targetting the correct Zoho API
 -------------------------------
@@ -21,21 +20,32 @@ use the third parameter of the `Client` constructor:
 
 ```php
 $zohoClient = new ZohoClient([
-    'client_id' => '',
-     'client_secret' => '',
-    'redirect_uri' => '',
-    'currentUserEmail' => '',
-    'applicationLogFilePath' => '',
-    'sandbox' => true or false,
+    'client_id' => 'xxxxxxxxxxxxxxxxxxxxxx',
+    'client_secret' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'redirect_uri' => 'http://xxxxxxxxx.com/bakcxxxx',
+    'currentUserEmail' => 'xxxxx@test.fr',
+    'applicationLogFilePath' => '/xxx/xxx/',
     'apiBaseUrl' => '',
     'apiVersion' => '',
     'access_type' => '',
-    'accounts_url' => '',
+    'accounts_url' => '', // Need this one during token generation.
     'persistence_handler_class' => '',
     'token_persistence_path' => ''
-]);
+], 'Europe/Paris');
 ```  
 
+Zoho CRM Commands
+-------------------------------------
+The project also comes with a Symfony Command.
+
+The command's constructor takes `ZohoClient` as a parameter.
+
+Usage:
+
+```sh
+# Command to generate access token
+$ console zohocrm:client generate-access-token xxxxxxx
+```
 
 Setting up unit tests
 ---------------------
@@ -43,17 +53,21 @@ Setting up unit tests
 Interested in contributing? You can easily set up the unit tests environment:
 Read how to change the client configuration - read [Configuration](https://github.com/zoho/zcrm-php-sdk)
 - copy the `phpunit.xml.dist` file into `phpunit.xml`
-- change the stored environment variable `client_secret`
-- change the stored environment variable `redirect_uri`
-- change the stored environment variable `currentUserEmail`
-- change the stored environment variable `applicationLogFilePath`
-- change the stored environment variable `persistence_handler_class`
-- change the stored environment variable `token_persistence_path`
-- change the stored environment variable `userid_test`
+- change the stored environment variable `CLIENT_ID`
+- change the stored environment variable `CLIENT_SECRET`
+- change the stored environment variable `REDIRECT_URI`
+- change the stored environment variable `CURRENT_USER_EMAIL`
+- change the stored environment variable `APPLICATION_LOG_FILE_PATH`
+- change the stored environment variable `PERSISTENCE_HANDLER_CLASS`
+- change the stored environment variable `TOKEN_PERSISTENCE_PATH`
+- change the stored environment variable `USERID_TEST`
+- change the stored environment variable `ZOHO_TIMEZONE`
+- change the stored environment variable `DEAL_STATUS`
+- change the stored environment variable `CAMPAIGN_TYPE`
+- change the stored environment variable `FILEPATH_TEST_UPLOAD`
 
-TODO:
-- Unit Test
-    - convertLead
-    - updateRelatedRecords	
-    - uploadFile	
-    - downloadFile
+Regarding the PR https://github.com/Wabel/zoho-crm-client-wrapper/pull/12/commits/5a911b660bc2ece5faf1cc5997e903f2e6e78eb9 we add `ZOHO_SANBOX`  to specify if you want to use  sandbox.
+
+Todo
+---------------------
+- Add more parameters to the client. Maybe something like `Z_PARAM_{X}`

@@ -30,7 +30,18 @@
 
     <php>
         <!-- PLEASE CONFIGURE AUTH TOKEN BELOW IN COPIED FILE -->
-        <!--<env name="auth_token" value=""/>-->
+        <!--<env name="CLIENT_ID" value=""/>-->
+        <!--<env name="CLIENT_SECRET" value=""/>-->
+        <!--<env name="REDIRECT_URI" value=""/>-->
+        <!--<env name="CURRENT_USER_EMAIL" value=""/>-->
+        <!--<env name="APPLICATION_LOG_FILE_PATH" value=""/>-->
+        <!--<env name="PERSISTENCE_HANDLER_CLASS" value=""/>-->
+        <!--<env name="TOKEN_PERSISTENCE_PATH" value=""/>-->
+        <!--<env name="USERID_TEST" value=""/>-->
+        <!--<env name="ZOHO_TIMEZONE" value=""/>-->
+        <!--<env name="DEAL_STATUS" value=""/>-->
+        <!--<env name="CAMPAIGN_TYPE" value=""/>-->
+        <!--<env name="FILEPATH_TEST_UPLOAD" value=""/>-->
     </php>
 
     <filter>
