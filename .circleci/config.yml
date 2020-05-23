@@ -5,11 +5,6 @@ jobs:
       - image: circleci/php:7.1-cli
     steps:
       - checkout
-      # Init Zoho environment for API
-      - run: mkdir -p client/logs
-      - run: touch client/logs/ZCRMClientLibrary.log
-      - run: mkdir -p client/token
-      - run: touch client/token/zcrm_oauthtokens.txt
       - run: sudo composer self-update
       # Download and cache dependencies
       - restore_cache:
@@ -21,9 +16,14 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
+      # Init Zoho environment for API
+      - run: mkdir -p client/logs
+      - run: touch client/logs/ZCRMClientLibrary.log
+      - run: mkdir -p client/token
+      - run: touch client/token/zcrm_oauthtokens.txt
       - run:
           name: Run Zoho Token
-          command: php /home/circleci/project/.circleci/scripts/refreshToken.php
+          command: php /home/circleci/project/.circleci/scripts/zohoTokenDeploy.php
           environment:
             APPLICATION_LOG_FILE_PATH: /home/circleci/project/client/logs
             TOKEN_PERSISTENCE_PATH: /home/circleci/project/client/token
