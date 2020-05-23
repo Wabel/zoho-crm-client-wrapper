@@ -23,6 +23,7 @@ use zcrmsdk\crm\setup\restclient\ZCRMRestClient;
 use zcrmsdk\crm\setup\users\ZCRMUser;
 use zcrmsdk\crm\utility\APIConstants;
 use zcrmsdk\oauth\exception\ZohoOAuthException;
+use zcrmsdk\oauth\utility\ZohoOAuthTokens;
 use zcrmsdk\oauth\ZohoOAuth;
 use zcrmsdk\oauth\ZohoOAuthClient;
 
@@ -94,6 +95,16 @@ class ZohoClient
     {
         return $this->configurations;
     }
+
+    /**
+     * @param array|null $configurations
+     */
+    public function setConfigurations(?array $configurations): void
+    {
+        $this->configurations = $configurations;
+    }
+
+
 
 
     /**
