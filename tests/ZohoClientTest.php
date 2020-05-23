@@ -17,18 +17,23 @@ class ZohoClientTest extends TestCase
 
     protected function setUp()
     {
-        $this->zohoClient  = new ZohoClient(
-            [
-                'client_id' => getenv('CLIENT_ID'),
-                'client_secret' => getenv('CLIENT_SECRET'),
-                'redirect_uri' => getenv('REDIRECT_URI'),
-                'currentUserEmail' => getenv('CURRENT_USER_EMAIL'),
-                'applicationLogFilePath' => getenv('APPLICATION_LOG_FILE_PATH'),
-                'persistence_handler_class' => getenv('PERSISTENCE_HANDLER_CLASS'),
-                'token_persistence_path' => getenv('TOKEN_PERSISTENCE_PATH'),
-            ],
-            getenv('ZOHO_TIMEZONE')
-        );
+        $configurations = [
+            'client_id' => getenv('CLIENT_ID'),
+            'client_secret' => getenv('CLIENT_SECRET'),
+            'redirect_uri' => getenv('REDIRECT_URI'),
+            'currentUserEmail' => getenv('CURRENT_USER_EMAIL'),
+            'applicationLogFilePath' => getenv('APPLICATION_LOG_FILE_PATH'),
+            'persistence_handler_class' => getenv('PERSISTENCE_HANDLER_CLASS'),
+            'token_persistence_path' => getenv('TOKEN_PERSISTENCE_PATH'),
+        ];
+
+        //@see: https://github.com/Wabel/zoho-crm-client-wrapper/pull/12/commits/5a911b660bc2ece5faf1cc5997e903f2e6e78eb9
+        //@todo: authorize more data
+        if(getenv('ZOHO_SANBOX')) {
+            //'true' or 'false',
+            $configurations['sandbox'] = getenv('ZOHO_SANBOX');
+        }
+        $this->zohoClient  = new ZohoClient($configurations,getenv('ZOHO_TIMEZONE'));
     }
 
     public function testGetModules()

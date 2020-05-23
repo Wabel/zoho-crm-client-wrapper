@@ -65,3 +65,9 @@ Read how to change the client configuration - read [Configuration](https://githu
 - change the stored environment variable `DEAL_STATUS`
 - change the stored environment variable `CAMPAIGN_TYPE`
 - change the stored environment variable `FILEPATH_TEST_UPLOAD`
+
+Regarding the PR https://github.com/Wabel/zoho-crm-client-wrapper/pull/12/commits/5a911b660bc2ece5faf1cc5997e903f2e6e78eb9 we add `ZOHO_SANBOX`  to specify if you want to use  sandbox.
+
+Todo
+---------------------
+- Add more parameters to the client. Maybe something like `Z_PARAM_{X}`
