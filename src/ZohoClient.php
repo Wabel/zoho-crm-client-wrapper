@@ -55,7 +55,6 @@ class ZohoClient
      *             'redirect_uri' => '',
      *             'currentUserEmail' => '',
      *             'applicationLogFilePath' => '',
-     *             'sandbox' => 'true' or 'false',
      *             'apiBaseUrl' => '',
      *             'apiVersion' => '',
      *             'access_type' => '',
